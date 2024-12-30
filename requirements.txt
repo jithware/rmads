@@ -1,0 +1,7 @@
+google-generativeai>=0.7.2
+gpt4all>=2.8.2
+openai-whisper>=20231117
+pytest>=8.3.2
+pytest-dependency>=0.6.0
+python-dotenv>=1.0.1
+sox>=1.5.0

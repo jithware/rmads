@@ -1,0 +1,12 @@
+{
+    "cSpell.diagnosticLevel": "Hint",
+    "[python]": {
+        "editor.formatOnSave": true
+    },
+    "[log]": {
+        "editor.wordWrap": "on"
+    },
+    "[plaintext]": {
+        "editor.wordWrap": "on"
+    }
+}

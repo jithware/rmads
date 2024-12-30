@@ -1,0 +1,4 @@
+.env
+*.pyc
+mp3/*
+tmp/*
