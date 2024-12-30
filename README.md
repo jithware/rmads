@@ -66,7 +66,7 @@ adjust ad recognition.
 
 ## Examples
 ```
-./src/rmads.py -d /tmp tests/road_not_taken.mp3 
+./src/rmads.py -d tmp tests/road_not_taken.mp3 
 audio="tests/road_not_taken.mp3" min=1.0 shots=25 th=-48 splits=5 whisper="base.en" llm="Meta-Llama-3-8B-Instruct.Q4_0.gguf"
 ==========
 Generating text from "road_not_taken_silence_01.mp3"...
@@ -96,8 +96,8 @@ Average ads = 1 per 0:00:29
 ```
 
 ```
-./src/rmads.py -d /tmp tests/road_not_taken.mp3 -p -g gemini-pro
-Purged "tests/road_not_taken.mp3" progress files in "/tmp"
+./src/rmads.py -d tmp tests/road_not_taken.mp3 -p -g gemini-pro
+Purged "tests/road_not_taken.mp3" progress files in "tmp"
 audio="tests/road_not_taken.mp3" min=1.0 shots=25 th=-48 splits=5 whisper="base.en" llm="gemini-pro"
 ==========
 Generating text from "road_not_taken_silence_01.mp3"...
