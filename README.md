@@ -63,3 +63,67 @@ options:
 Change -e, -m or -s to adjust number of split files. Change -w to adjust audio to text recognition. Change -a or -g to
 adjust ad recognition.
 ```
+
+## Examples
+```
+./src/rmads.py -d /tmp tests/road_not_taken.mp3 
+audio="tests/road_not_taken.mp3" min=1.0 shots=25 th=-48 splits=5 whisper="base.en" llm="Meta-Llama-3-8B-Instruct.Q4_0.gguf"
+==========
+Generating text from "road_not_taken_silence_01.mp3"...
+Calling gpt4all using "road_not_taken_silence_01.txt"...
+Response = YES
+==========
+Generating text from "road_not_taken_silence_02.mp3"...
+Calling gpt4all using "road_not_taken_silence_02.txt"...
+Response = NO
+==========
+Generating text from "road_not_taken_silence_03.mp3"...
+Calling gpt4all using "road_not_taken_silence_03.txt"...
+Response = YES
+==========
+Generating text from "road_not_taken_silence_04.mp3"...
+Calling gpt4all using "road_not_taken_silence_04.txt"...
+Response = NO
+==========
+Generating text from "road_not_taken_silence_05.mp3"...
+Calling gpt4all using "road_not_taken_silence_05.txt"...
+Response = NO
+==========
+Total ads = 2
+Total ad time = 0:00:16 of 0:00:59 (27.5%)
+Ads per minute = 2.03
+Average ads = 1 per 0:00:29
+```
+
+```
+./src/rmads.py -d /tmp tests/road_not_taken.mp3 -p -g gemini-pro
+Purged "tests/road_not_taken.mp3" progress files in "/tmp"
+audio="tests/road_not_taken.mp3" min=1.0 shots=25 th=-48 splits=5 whisper="base.en" llm="gemini-pro"
+==========
+Generating text from "road_not_taken_silence_01.mp3"...
+Calling gemini using "road_not_taken_silence_01.txt"...
+Response = YES
+==========
+Generating text from "road_not_taken_silence_02.mp3"...
+Calling gemini using "road_not_taken_silence_02.txt"...
+Response = NO
+==========
+Generating text from "road_not_taken_silence_03.mp3"...
+Waiting for 0.3 seconds to call gemini-pro because rpm = 15
+Calling gemini using "road_not_taken_silence_03.txt"...
+Response = YES
+==========
+Generating text from "road_not_taken_silence_04.mp3"...
+Waiting for 0.3 seconds to call gemini-pro because rpm = 15
+Calling gemini using "road_not_taken_silence_04.txt"...
+Response = NO
+==========
+Generating text from "road_not_taken_silence_05.mp3"...
+Calling gemini using "road_not_taken_silence_05.txt"...
+Response = NO
+==========
+Total ads = 2
+Total ad time = 0:00:16 of 0:00:59 (27.5%)
+Ads per minute = 2.03
+Average ads = 1 per 0:00:29
+```
