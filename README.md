@@ -65,6 +65,7 @@ adjust ad recognition.
 ```
 
 ## Examples
+### gpt4all
 ```
 ./src/rmads.py -d tmp tests/road_not_taken.mp3 
 audio="tests/road_not_taken.mp3" min=1.0 shots=25 th=-48 splits=5 whisper="base.en" llm="Meta-Llama-3-8B-Instruct.Q4_0.gguf"
@@ -95,6 +96,7 @@ Ads per minute = 2.03
 Average ads = 1 per 0:00:29
 ```
 
+### gemini
 ```
 ./src/rmads.py -d tmp tests/road_not_taken.mp3 -p -g gemini-pro
 Purged "tests/road_not_taken.mp3" progress files in "tmp"
@@ -127,3 +129,20 @@ Total ad time = 0:00:16 of 0:00:59 (27.5%)
 Ads per minute = 2.03
 Average ads = 1 per 0:00:29
 ```
+
+### gemini audio recognition[^1]
+```
+./src/rmads.py -d tmp tests/road_not_taken.mp3 -G gemini-2.0-flash-exp
+Calling gemini using "tests/road_not_taken.mp3"...
+Response =
+00:00:00.000 00:00:03.000 - not ad
+00:00:03.000 00:00:22.000 - not ad
+00:00:25.000 00:00:26.000 - not ad
+00:00:26.000 00:00:48.000 - not ad
+==========
+Total ads = 1
+Total ad time = 0:00:14 of 0:00:59 (24.4%)
+Ads per minute = 1.02
+Average ads = 1 per 0:00:59
+```
+[^1]: Using gemini for audio upload ad recognition is not quite accurate yet

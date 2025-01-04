@@ -141,6 +141,7 @@ def get_noads_file(audiofile, dir, concatstr):
     return noadsaudio
 
 
+# https://ai.google.dev/gemini-api/docs/safety-settings
 SAFETY_SETTINGS = {
     HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT: HarmBlockThreshold.BLOCK_NONE,
     HarmCategory.HARM_CATEGORY_HATE_SPEECH: HarmBlockThreshold.BLOCK_NONE,
@@ -148,11 +149,13 @@ SAFETY_SETTINGS = {
     HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT: HarmBlockThreshold.BLOCK_NONE
 }
 
+# https://ai.google.dev/api/generate-content#generationconfig
 GENERATION_CONFIG = genai.types.GenerationConfig(
-    temperature=1.0,
-    top_k=64,
+    # https://ai.google.dev/gemini-api/docs/models/generative-models#model-parameters
+    temperature=0.0,
+    top_k=40,
     top_p=0.95,
-    max_output_tokens=8096,
+    max_output_tokens=4,
     response_mime_type='text/plain')
 
 
@@ -209,10 +212,12 @@ def gemini_audio(args, audiofile, adslog=None, noadslog=None):
         if args.verbose:
             print(str(model.count_tokens([gemini_audio_file])))
 
+        audio_generation_config = GENERATION_CONFIG
+        audio_generation_config.max_output_tokens = 8096
         response = model.generate_content(
             [prompts[0], gemini_audio_file],
             safety_settings=SAFETY_SETTINGS,
-            generation_config=GENERATION_CONFIG)
+            generation_config=audio_generation_config)
 
         concatstr = ''
         fullpath = str(Path(audiofile).resolve())
