@@ -17,9 +17,9 @@ defined as ```GEMINI_API_KEY="YOUR_API_KEY"``` in an ```.env``` file
 usage: rmads.py [-h]
                 [-a {Meta-Llama-3-8B-Instruct.Q4_0.gguf,Nous-Hermes-2-Mistral-7B-DPO.Q4_0.gguf,Phi-3-mini-4k-instruct.Q4_0.gguf,orca-mini-3b-gguf2-q4_0.gguf,gpt4all-13b-snoozy-q4_0.gguf}]
                 [-c] [-d DIRECTORY] [-e THRESHOLD]
-                [-g {gemini-pro,gemini-1.0-pro,gemini-1.5-pro,gemini-1.5-flash,gemini-1.5-flash-8b,gemini-2.0-flash-exp}]
-                [-G {gemini-1.5-pro,gemini-1.5-flash,gemini-1.5-flash-8b,gemini-2.0-flash-exp}] [-k keywords.txt]
-                [-l LANGUAGE] [-m SECONDS] [-p] [-P] [-r [SEGMENT ...]] [--rpm RPM] [-s SHOTS] [-t [SEGMENT ...]]
+                [-g {gemini-pro,gemini-1.5-pro,gemini-1.5-flash,gemini-1.5-flash-8b,gemini-2.0-flash}]
+                [-G {gemini-1.5-pro,gemini-1.5-flash,gemini-1.5-flash-8b,gemini-2.0-flash}] [-k keywords.txt] [-l LANGUAGE]
+                [-m SECONDS] [-p] [-P] [-r [SEGMENT ...]] [--rpm RPM] [-s SHOTS] [-t [SEGMENT ...]]
                 [-w {tiny,tiny.en,base,base.en,small,small.en,medium,medium.en,large}] [-v]
                 audiofile [audiofile ...]
 
@@ -37,9 +37,9 @@ options:
                         working directory (default: .)
   -e THRESHOLD, --th THRESHOLD
                         dB threshold level (-96 to 0) for silence when splitting audio (default: -48)
-  -g {gemini-pro,gemini-1.0-pro,gemini-1.5-pro,gemini-1.5-flash,gemini-1.5-flash-8b,gemini-2.0-flash-exp}, --gemini {gemini-pro,gemini-1.0-pro,gemini-1.5-pro,gemini-1.5-flash,gemini-1.5-flash-8b,gemini-2.0-flash-exp}
+  -g {gemini-pro,gemini-1.5-pro,gemini-1.5-flash,gemini-1.5-flash-8b,gemini-2.0-flash}, --gemini {gemini-pro,gemini-1.5-pro,gemini-1.5-flash,gemini-1.5-flash-8b,gemini-2.0-flash}
                         gemini model to use for ad recognition (default: None)
-  -G {gemini-1.5-pro,gemini-1.5-flash,gemini-1.5-flash-8b,gemini-2.0-flash-exp}, --gemini-audio {gemini-1.5-pro,gemini-1.5-flash,gemini-1.5-flash-8b,gemini-2.0-flash-exp}
+  -G {gemini-1.5-pro,gemini-1.5-flash,gemini-1.5-flash-8b,gemini-2.0-flash}, --gemini-audio {gemini-1.5-pro,gemini-1.5-flash,gemini-1.5-flash-8b,gemini-2.0-flash}
                         gemini model to use for audio upload ad recognition (default: None)
   -k keywords.txt, --keyword-file keywords.txt
                         line separated keyword file to use to id an ad (default: None)
@@ -60,8 +60,8 @@ options:
                         whisper model to use for text recognition (default: base.en)
   -v, --verbose         verbose output (default: None)
 
-Change -e, -m or -s to adjust number of split files. Change -w to adjust audio to text recognition. Change -a or -g to
-adjust ad recognition.
+Change -e, -m or -s to adjust number of split files. Change -w to adjust audio to text recognition. Change -a or -g to adjust ad
+recognition.
 ```
 
 ## Examples
@@ -132,17 +132,16 @@ Average ads = 1 per 0:00:29
 
 ### gemini audio recognition[^1]
 ```
-./src/rmads.py -d tmp tests/road_not_taken.mp3 -G gemini-2.0-flash-exp
+./src/rmads.py -d tmp tests/road_not_taken.mp3 -G gemini-2.0-flash
 Calling gemini using "tests/road_not_taken.mp3"...
 Response =
-00:00:00.000 00:00:03.000 - not ad
-00:00:03.000 00:00:22.000 - not ad
-00:00:25.000 00:00:26.000 - not ad
-00:00:26.000 00:00:48.000 - not ad
+00:00:07.000 00:00:28.000 - not ad
+00:00:32.000 00:00:35.000 - not ad
+00:00:38.000 00:00:58.000 - not ad
 ==========
-Total ads = 1
-Total ad time = 0:00:14 of 0:00:59 (24.4%)
-Ads per minute = 1.02
-Average ads = 1 per 0:00:59
+Total ads = 3
+Total ad time = 0:00:15 of 0:00:59 (26.1%)
+Ads per minute = 3.05
+Average ads = 1 per 0:00:19
 ```
 [^1]: Using gemini for audio upload ad recognition is not quite accurate yet

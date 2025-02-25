@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 # Requirements:
-#   sudo dnf install python3-pip mp3splt ffmpeg | sudo apt install python3-pip mp3splt ffmpeg
+#   sudo dnf install python3-pip mp3splt ffmpeg OR sudo apt install python3-pip mp3splt ffmpeg
 #   pip install -U -r requirements.txt
 #
 #   To use gemini, you must have a Gemini API key (https://aistudio.google.com/app/apikey)
@@ -49,9 +49,9 @@ def get_args():
     parser.add_argument('-e', '--th', type=int, default=-48, metavar='THRESHOLD',
                         help='dB threshold level (-96 to 0) for silence when splitting audio')
     # https://ai.google.dev/gemini-api/docs/models/gemini#model-variations
-    parser.add_argument('-g', '--gemini', choices=['gemini-pro', 'gemini-1.0-pro', 'gemini-1.5-pro', 'gemini-1.5-flash', 'gemini-1.5-flash-8b', 'gemini-2.0-flash-exp'],
+    parser.add_argument('-g', '--gemini', choices=['gemini-pro', 'gemini-1.5-pro', 'gemini-1.5-flash', 'gemini-1.5-flash-8b', 'gemini-2.0-flash'],
                         help='gemini model to use for ad recognition')
-    parser.add_argument('-G', '--gemini-audio', choices=['gemini-1.5-pro', 'gemini-1.5-flash', 'gemini-1.5-flash-8b', 'gemini-2.0-flash-exp'],
+    parser.add_argument('-G', '--gemini-audio', choices=['gemini-1.5-pro', 'gemini-1.5-flash', 'gemini-1.5-flash-8b', 'gemini-2.0-flash'],
                         help='gemini model to use for audio upload ad recognition')
     parser.add_argument('-k', '--keyword-file', default=None, metavar='keywords.txt',
                         help='line separated keyword file to use to id an ad')
@@ -516,7 +516,7 @@ def main(args=None):
 
                     if llm == args.gemini:
 
-                        # Requests per minute for gemini (https://ai.google.dev/pricing)
+                        # Requests per minute for gemini (https://ai.google.dev/gemini-api/docs/rate-limits)
                         if args.gemini == 'gemini-1.5-pro':
                             rpm = 2
                         else:
@@ -535,7 +535,7 @@ def main(args=None):
                             time.sleep(sleep)
 
                         # https://ai.google.dev/api/generate-content
-                        if args.gemini == 'gemini-pro' or args.gemini == 'gemini-1.0-pro':
+                        if args.gemini == 'gemini-pro':
                             model = genai.GenerativeModel(args.gemini)
                         else:
                             model = genai.GenerativeModel(
